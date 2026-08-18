@@ -1,0 +1,36 @@
+{
+  "name": "colophon-project",
+  "version": "0.0.1",
+  "description": "The Colophon Project's pages",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node generator/build.js",
+    "start": "node generator/serve.js",
+    "prettier:check": "npx prettier . --check",
+    "prettier:write": "npx prettier . --write",
+    "lint": "eslint 'generator/**/*.js' 'src/**/*.js' 'eslint.config.js'",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest watch",
+    "check": "npm run prettier:check && npm run lint && npm test"
+  },
+  "keywords": [
+    "colophon",
+    "documentation",
+    "static-site"
+  ],
+  "author": "tulinmola",
+  "license": "MIT",
+  "dependencies": {
+    "markdown-it": "^15.0.0",
+    "markdown-it-anchor": "^9.2.1",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.1",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6",
+    "vitest": "^4.1.11"
+  }
+}

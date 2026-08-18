@@ -1,0 +1,9 @@
+{
+  "title": "The Colophon Project",
+  "baseUrl": "https://tulinmola.github.io/colophon-project/",
+  "defaultLanguage": "en",
+  "languages": {
+    "en": { "name": "English", "direction": "ltr" }
+  },
+  "sources": []
+}

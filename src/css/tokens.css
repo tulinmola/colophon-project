@@ -1,0 +1,18 @@
+:root {
+  color-scheme: light dark;
+
+  --page: light-dark(#faf8f3, #14130f);
+  --ink: light-dark(#221f1a, #e6e1d7);
+  --ink-quiet: light-dark(#6d6555, #9a9384);
+  --rule: light-dark(#e0d9c8, #2c2924);
+  --accent: light-dark(#8a3324, #d3866a);
+
+  --serif: ui-serif, Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --measure: 34rem;
+  --sidebar: 12rem;
+  --gutter: 1.5rem;
+  --edge: 4rem;
+  --line: 1.6;
+}

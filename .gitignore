@@ -1,0 +1,11 @@
+.idea/
+node_modules/
+*.map
+.DS_Store
+dist/
+.env.*.local
+
+# Documentation gathered from the sibling repositories at build time. The
+# sources and their pinned refs are in site.config.json; the copies are not
+# committed.
+vendor/
