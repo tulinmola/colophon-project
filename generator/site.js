@@ -39,10 +39,14 @@ export class Site {
 
   navigation(language) {
     const sections = this.#pages.filter(
-      page => page.language == language && page.segments.length == 1
+      page => page.language == language && page.segments.length == 1 && !page.notFound
     )
 
     return sections.sort((first, second) => first.order - second.order)
+  }
+
+  notFoundPage() {
+    return this.#pages.find(page => page.notFound && page.language == this.defaultLanguage)
   }
 
   render(page) {

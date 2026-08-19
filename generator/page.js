@@ -53,6 +53,10 @@ export class Page {
     return this.#language
   }
 
+  get notFound() {
+    return this.#metadata.notFound == true
+  }
+
   get order() {
     return this.#metadata.order ?? 0
   }

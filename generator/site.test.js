@@ -60,6 +60,19 @@ describe("Site", function () {
     expect(titles).toEqual(["Vision", "Player"])
   })
 
+  it("keeps the page that answers for 404 out of the navigation", function () {
+    const section = pageAt("vision/index.en.md"),
+      missing = pageAt(
+        "not-found/index.en.md",
+        "title: No such page\ndescription: A.\nnotFound: true"
+      ),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [section, missing])
+
+    expect(site.navigation("en")).toEqual([section])
+    expect(site.notFoundPage()).toBe(missing)
+  })
+
   it("rewrites a link written as a site path", function () {
     const source =
         "---\ntitle: A page\ndescription: A description.\n---\nSee [the vision](/en/vision/).\n",
