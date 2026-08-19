@@ -1,19 +1,13 @@
-import { Site } from "./site.js"
 import { base } from "../src/layouts/base.js"
 import { emit } from "./emit.js"
 import { join } from "node:path"
-import { readConfig } from "./config.js"
-import { readContent } from "./content.js"
+import { readSite } from "./read_site.js"
 
 const ROOT = join(import.meta.dirname, "..")
 
 export function build() {
-  const config = readConfig(),
-    contentDirectory = join(ROOT, "content"),
-    pages = readContent(contentDirectory, config.defaultLanguage),
-    site = new Site(config, pages)
-
-  const outputDirectory = join(ROOT, "dist"),
+  const site = readSite(),
+    outputDirectory = join(ROOT, "dist"),
     styleDirectory = join(ROOT, "src", "css")
 
   emit(site, base, outputDirectory, styleDirectory)
