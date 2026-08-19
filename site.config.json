@@ -3,7 +3,18 @@
   "baseUrl": "https://tulinmola.github.io/colophon-project/",
   "defaultLanguage": "en",
   "languages": {
-    "en": { "name": "English", "direction": "ltr" }
+    "en": {
+      "name": "English",
+      "direction": "ltr"
+    }
   },
-  "sources": []
+  "sources": [
+    {
+      "slug": "player",
+      "repository": "tulinmola/colophon-player",
+      "ref": "main",
+      "path": "docs",
+      "development": "../colophon-player/docs"
+    }
+  ]
 }

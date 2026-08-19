@@ -2,7 +2,7 @@ import { join, sep } from "node:path"
 import { readFileSync, readdirSync } from "node:fs"
 import { Page } from "./page.js"
 
-export function readContent(directory, defaultLanguage) {
+export function readContent(directory, defaultLanguage, prefix = "") {
   const names = readdirSync(directory, { recursive: true }),
     pages = []
 
@@ -11,7 +11,8 @@ export function readContent(directory, defaultLanguage) {
       continue
     }
 
-    const relativePath = name.split(sep).join("/"),
+    const relativeName = name.split(sep).join("/"),
+      relativePath = prefix ? `${prefix}/${relativeName}` : relativeName,
       path = join(directory, name),
       source = readFileSync(path, "utf8"),
       page = new Page(relativePath, source, defaultLanguage)

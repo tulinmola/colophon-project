@@ -84,6 +84,107 @@ describe("Site", function () {
     expect(markup).toContain('href="/colophon-project/en/vision/"')
   })
 
+  it("resolves a link relative to the page that carries it", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [the machine](../machine/).\n",
+      page = new Page("player/debugger/index.en.md", source, "en"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="/colophon-project/en/player/machine/"')
+  })
+
+  it("resolves a link relative to a section index", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [the debugger](debugger/).\n",
+      page = new Page("player/index.en.md", source, "en"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="/colophon-project/en/player/debugger/"')
+  })
+
+  it("keeps a fragment when it resolves the path before it", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [it](machine/#firmware).\n",
+      page = new Page("player/index.en.md", source, "en"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="/colophon-project/en/player/machine/#firmware"')
+  })
+
+  it("leaves a link to somewhere on this page alone", function () {
+    const source = "---\ntitle: A page\ndescription: A description.\n---\nSee [below](#later).\n",
+      page = new Page("player/index.en.md", source, "en"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="#later"')
+  })
+
+  it("gathers the pages under a section, in their stated order", function () {
+    const section = pageAt("player/index.en.md", "title: Player\ndescription: A."),
+      machine = pageAt("player/machine/index.en.md", "title: Machine\ndescription: B.\norder: 2"),
+      debugger_ = pageAt(
+        "player/debugger/index.en.md",
+        "title: Debugger\ndescription: C.\norder: 1"
+      ),
+      other = pageAt("vision/index.en.md", "title: Vision\ndescription: D."),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [section, machine, debugger_, other]),
+      titles = site.childrenOf(section).map(page => page.title)
+
+    expect(titles).toEqual(["Debugger", "Machine"])
+  })
+
+  it("gathers no children for a page that has none", function () {
+    const page = pageAt("player/machine/index.en.md"),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [page])
+
+    expect(site.childrenOf(page)).toEqual([])
+  })
+
+  it("resolves a link to a markdown file where that file sits", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [the screen](screen.en.md).\n",
+      page = new Page("player/debugger/monitor.en.md", source, "en"),
+      screen = pageAt("player/debugger/screen.en.md"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page, screen]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="/colophon-project/en/player/debugger/screen/"')
+  })
+
+  it("keeps a fragment on a link to a markdown file", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [it](../index.en.md#carrying).\n",
+      page = new Page("player/debugger/monitor.en.md", source, "en"),
+      home = pageAt("player/index.en.md"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page, home]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="/colophon-project/en/player/#carrying"')
+  })
+
+  it("leaves a link to a markdown file that is no page alone", function () {
+    const source =
+        "---\ntitle: A page\ndescription: A description.\n---\nSee [it](nowhere.en.md).\n",
+      page = new Page("player/index.en.md", source, "en"),
+      config = configFor("https://tulinmola.github.io/colophon-project/"),
+      site = new Site(config, [page]),
+      markup = site.render(page).toString()
+
+    expect(markup).toContain('href="nowhere.en.md"')
+  })
+
   it("leaves an outside link alone", function () {
     const source =
         "---\ntitle: A page\ndescription: A description.\n---\nSee [it](https://example.com/).\n",

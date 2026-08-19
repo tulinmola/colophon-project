@@ -19,6 +19,10 @@ export function verify(site) {
   for (const page of site.pages) {
     const address = site.url(page.path)
 
+    if (addresses.has(address)) {
+      problems.push(`${page.relativePath}: a second page claims ${page.path}`)
+    }
+
     addresses.add(address)
   }
 
@@ -35,7 +39,10 @@ export function verify(site) {
       markup = document.toString()
 
     for (const href of hrefsIn(markup)) {
-      if (href.startsWith("/") && !addresses.has(href)) {
+      const address = href.replace(/[?#].*$/u, ""),
+        inside = address.startsWith("/") || address.endsWith(".md")
+
+      if (inside && !addresses.has(address)) {
         problems.push(`${page.path}: links to ${href}, which is no page`)
       }
     }

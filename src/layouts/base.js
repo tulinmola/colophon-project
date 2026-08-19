@@ -1,13 +1,31 @@
 import { html } from "../../generator/html.js"
 
-function sectionLink(site, section, current) {
-  const url = site.url(section.path)
+function pageLink(site, target, current) {
+  const url = site.url(target.path)
 
-  if (section.path == current.path) {
-    return html`<li><a href="${url}" aria-current="page">${section.title}</a></li>`
+  if (target.path == current.path) {
+    return html`<a href="${url}" aria-current="page">${target.title}</a>`
   }
 
-  return html`<li><a href="${url}">${section.title}</a></li>`
+  return html`<a href="${url}">${target.title}</a>`
+}
+
+function pageItem(site, target, current) {
+  const link = pageLink(site, target, current),
+    children = current.isWithin(target) ? site.childrenOf(target) : []
+
+  if (children.length == 0) {
+    return html`<li>${link}</li>`
+  }
+
+  const items = children.map(child => pageItem(site, child, current))
+
+  return html`<li>
+    ${link}
+    <ul>
+      ${items}
+    </ul>
+  </li>`
 }
 
 export function base(page, site) {
@@ -19,7 +37,7 @@ export function base(page, site) {
     canonicalUrl = site.absoluteUrl(page.path),
     styleUrl = site.url("/css/index.css"),
     sections = site.navigation(page.language),
-    links = sections.map(section => sectionLink(site, section, page))
+    items = sections.map(section => pageItem(site, section, page))
 
   return html`<!doctype html>
     <html lang="${page.language}" dir="${language.direction}">
@@ -36,7 +54,7 @@ export function base(page, site) {
           <a href="${homeUrl}">${site.title}</a>
           <nav aria-label="Sections">
             <ul>
-              ${links}
+              ${items}
             </ul>
           </nav>
         </header>

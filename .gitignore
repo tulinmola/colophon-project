@@ -5,7 +5,6 @@ node_modules/
 dist/
 .env.*.local
 
-# Documentation gathered from the sibling repositories at build time. The
-# sources and their pinned refs are in site.config.json; the copies are not
-# committed.
-vendor/
+# Where gather clones a sibling's docs when they are not on disk beside us.
+# The sources and their refs are in site.config.json.
+.cache/

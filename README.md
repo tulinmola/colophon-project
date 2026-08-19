@@ -13,21 +13,32 @@ Node and npm are the whole toolchain. The site is plain markdown, rendered by a 
 ```sh
 npm install
 npm start        # serve the site, rebuilding on every save
+npm run gather   # fetch the documentation of the sibling projects
 npm run build    # write the site to dist/
-npm run check    # formatting, linting and the tests
+npm run check    # formatting, linting, the tests and verify
 ```
 
 `npm start` serves the site under the path its `baseUrl` carries, so a link that works locally works published.
 
 ## Writing
 
-A page is a folder holding `index.<language>.md`: front matter with a title and a description, then markdown starting at `##`. The folder is the page's own, so anything the prose cites can sit beside it.
+A page is a markdown file named `<name>.<language>.md`: front matter with a title and a description, then markdown starting at `##`. It becomes a folder holding `index.<language>.md` the day it carries artifacts, so that whatever the prose cites sits beside it; both spellings address the same page.
+
+A link names the markdown file it points at, which is what makes it work in an editor, on GitHub, and once published.
 
 Adding a page is adding that file. Nothing else knows the site's shape.
 
 ## The parts
 
-The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. There is nothing to gather yet: the emulator and the player still keep everything in their READMEs, and `sources` in `site.config.json` is empty until they do not.
+The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them; the [player](https://github.com/tulinmola/colophon-player) is the first, and the emulator still keeps everything in its README.
+
+A source is read where it stands. When the sibling repository is checked out beside this one it is read from there, so a page can be written and looked at before it is committed; `npm run gather` clones what is missing into `.cache/` for a machine with no siblings beside it. Nothing is copied into this repository, and every build says which of the two it read.
+
+## Publishing
+
+Pushing to `main` builds the site and publishes it to GitHub Pages.
+
+A change in a sibling repository does not. Its documentation is gathered when the site is built, so the site carries what stood there the last time it was built; running the Pages workflow from the Actions tab is what goes back for it.
 
 ## License
 

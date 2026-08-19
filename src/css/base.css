@@ -62,6 +62,11 @@ body > header {
     padding: 0;
   }
 
+  ul ul {
+    margin-block-start: 0.35rem;
+    padding-inline-start: 0.85rem;
+  }
+
   li + li {
     margin-block-start: 0.35rem;
   }
@@ -147,6 +152,29 @@ pre code {
   font-size: 0.8125rem;
 }
 
+table {
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  inline-size: 100%;
+}
+
+th,
+td {
+  border-block-end: 1px solid var(--rule);
+  padding-block: 0.45rem;
+  padding-inline-end: 1.25rem;
+  text-align: start;
+  vertical-align: baseline;
+}
+
+th {
+  font-weight: 600;
+}
+
+td:first-child {
+  white-space: nowrap;
+}
+
 blockquote {
   border-inline-start: 2px solid var(--rule);
   color: var(--ink-quiet);
@@ -163,24 +191,11 @@ blockquote {
   }
 
   body > header {
-    align-items: baseline;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 1.5rem;
     margin-block-end: calc(var(--gutter) * 2);
     position: static;
 
     nav {
-      margin-block-start: 0;
-    }
-
-    ul {
-      display: flex;
-      gap: 0 1.5rem;
-    }
-
-    li + li {
-      margin-block-start: 0;
+      margin-block-start: 1rem;
     }
   }
 }

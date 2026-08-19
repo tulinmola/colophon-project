@@ -16,7 +16,12 @@ export function build() {
 }
 
 if (import.meta.main) {
-  const site = build()
+  const site = build(),
+    origins = Object.entries(site.origins)
 
   console.log(`Wrote ${site.pages.length} pages to dist/.`)
+
+  for (const [slug, origin] of origins) {
+    console.log(`  ${slug} from ${origin}`)
+  }
 }

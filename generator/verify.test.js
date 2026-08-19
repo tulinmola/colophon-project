@@ -75,6 +75,25 @@ describe("verify", function () {
     expect(problems).toEqual([])
   })
 
+  it("reports two pages claiming one address", function () {
+    const flat = pageAt("player/machine.en.md", COMPLETE),
+      foldered = pageAt("player/machine/index.en.md", COMPLETE),
+      site = siteOf([flat, foldered]),
+      problems = verify(site)
+
+    expect(problems).toEqual([
+      "player/machine/index.en.md: a second page claims /en/player/machine/"
+    ])
+  })
+
+  it("reports a link to a markdown file that resolved to nothing", function () {
+    const page = pageAt("index.en.md", COMPLETE, "See [it](nowhere.en.md).\n"),
+      site = siteOf([page]),
+      problems = verify(site)
+
+    expect(problems).toEqual(["/: links to nowhere.en.md, which is no page"])
+  })
+
   it("reports a site with no page to answer an unknown address", function () {
     const page = pageAt("index.en.md", COMPLETE),
       site = new Site(CONFIG, [page]),

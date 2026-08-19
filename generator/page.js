@@ -1,6 +1,6 @@
 import { parse as parseYaml } from "yaml"
 
-const FILE_NAME = /^index\.(?<language>[a-z]{2,3}(?:-[A-Za-z0-9]+)*)\.md$/u
+const FILE_NAME = /^(?<name>[a-z0-9-]+)\.(?<language>[a-z]{2,3}(?:-[A-Za-z0-9]+)*)\.md$/u
 const FRONT_MATTER = /^---\r?\n(?<metadata>[\s\S]*?)\r?\n---\r?\n(?<body>[\s\S]*)$/u
 
 function pathOf(segments, language, defaultLanguage) {
@@ -16,6 +16,7 @@ export class Page {
   #language
   #metadata
   #path
+  #relativePath
   #segments
   #source
 
@@ -26,17 +27,22 @@ export class Page {
       frontMatter = FRONT_MATTER.exec(source)
 
     if (!name) {
-      throw new Error(`${relativePath}: a page is named index.<language>.md`)
+      throw new Error(`${relativePath}: a page is named <name>.<language>.md`)
     }
 
     if (!frontMatter) {
       throw new Error(`${relativePath}: a page opens with a YAML front matter block`)
     }
 
+    if (name.groups.name != "index") {
+      segments.push(name.groups.name)
+    }
+
     this.#body = frontMatter.groups.body
     this.#language = name.groups.language
     this.#metadata = parseYaml(frontMatter.groups.metadata)
     this.#path = pathOf(segments, this.#language, defaultLanguage)
+    this.#relativePath = relativePath
     this.#segments = segments
     this.#source = source
   }
@@ -65,6 +71,10 @@ export class Page {
     return this.#path
   }
 
+  get relativePath() {
+    return this.#relativePath
+  }
+
   get segments() {
     return this.#segments
   }
@@ -75,5 +85,9 @@ export class Page {
 
   get title() {
     return this.#metadata.title
+  }
+
+  isWithin(section) {
+    return section.segments.every((segment, index) => this.#segments[index] == segment)
   }
 }

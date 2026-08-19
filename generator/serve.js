@@ -2,6 +2,7 @@ import { existsSync, readFileSync, statSync, watch } from "node:fs"
 import { extname, join, resolve } from "node:path"
 import { createServer } from "node:http"
 import { readConfig } from "./config.js"
+import { resolveSource } from "./sources.js"
 import { spawnSync } from "node:child_process"
 
 const ROOT = join(import.meta.dirname, ".."),
@@ -50,6 +51,18 @@ function fileFor(pathname) {
   return existsSync(path) ? path : null
 }
 
+function watchedDirectories() {
+  const directories = WATCHED.map(name => join(ROOT, name))
+
+  for (const source of config.sources) {
+    const resolved = resolveSource(source)
+
+    directories.push(resolved.directory)
+  }
+
+  return directories
+}
+
 function watchSources() {
   let pending = null
 
@@ -58,9 +71,9 @@ function watchSources() {
     pending = setTimeout(rebuild, SETTLE_MILLISECONDS)
   }
 
-  for (const name of WATCHED) {
-    const directory = join(ROOT, name)
+  const directories = watchedDirectories()
 
+  for (const directory of directories) {
     watch(directory, { recursive: true }, schedule)
   }
 }

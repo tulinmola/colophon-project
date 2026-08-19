@@ -39,6 +39,23 @@ describe("Page", function () {
     expect(page.segments).toEqual(["emulator", "building"])
   })
 
+  it("addresses a page written flat where its folder would have been", function () {
+    const source = sourceOf(METADATA),
+      flat = new Page("player/debugger/monitor.en.md", source, "en"),
+      foldered = new Page("player/debugger/monitor/index.en.md", source, "en")
+
+    expect(flat.path).toBe("/en/player/debugger/monitor/")
+    expect(foldered.path).toBe(flat.path)
+    expect(flat.segments).toEqual(foldered.segments)
+  })
+
+  it("keeps the path a page was read from", function () {
+    const source = sourceOf(METADATA),
+      page = new Page("player/debugger/monitor.en.md", source, "en")
+
+    expect(page.relativePath).toBe("player/debugger/monitor.en.md")
+  })
+
   it("accepts a language tag with a subtag", function () {
     const source = sourceOf(METADATA),
       page = new Page("index.pt-BR.md", source, "en")
@@ -71,10 +88,40 @@ describe("Page", function () {
     expect(page.source).toBe(source)
   })
 
+  it("places itself within the sections above it, and within itself", function () {
+    const source = sourceOf(METADATA),
+      page = new Page("player/debugger/crtc.en.md", source, "en"),
+      debugger_ = new Page("player/debugger/index.en.md", source, "en"),
+      player = new Page("player/index.en.md", source, "en")
+
+    expect(page.isWithin(page)).toBe(true)
+    expect(page.isWithin(debugger_)).toBe(true)
+    expect(page.isWithin(player)).toBe(true)
+  })
+
+  it("places itself outside a section it does not descend from", function () {
+    const source = sourceOf(METADATA),
+      page = new Page("player/debugger/crtc.en.md", source, "en"),
+      machine = new Page("player/machine.en.md", source, "en"),
+      vision = new Page("vision/index.en.md", source, "en")
+
+    expect(page.isWithin(machine)).toBe(false)
+    expect(page.isWithin(vision)).toBe(false)
+  })
+
+  it("places every page within the root", function () {
+    const source = sourceOf(METADATA),
+      home = new Page("index.en.md", source, "en"),
+      page = new Page("player/debugger/crtc.en.md", source, "en")
+
+    expect(page.isWithin(home)).toBe(true)
+    expect(home.isWithin(page)).toBe(false)
+  })
+
   it("refuses a file that is not named for a language", function () {
     const source = sourceOf(METADATA)
 
-    expect(() => new Page("vision/home.md", source, "en")).toThrow(/index\.<language>\.md/u)
+    expect(() => new Page("vision/home.md", source, "en")).toThrow(/<name>\.<language>\.md/u)
   })
 
   it("refuses a file with no front matter", function () {

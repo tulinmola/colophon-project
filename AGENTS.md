@@ -4,15 +4,15 @@ The Colophon Project's pages: the prologue, the documentation each sibling repos
 
 ## Architecture
 
-The generator is a pipeline over plain files, and a stage knows nothing of the stage after it. `verify` judges what was built and writes nothing. `build.js` is the only place that wires the stages together, and the only one that knows this site has layouts.
+The generator is a pipeline over plain files, and a stage knows nothing of the stage after it. `verify` judges what was built and writes nothing. `build.js` is the only place that knows this site has layouts.
 
-A page is a folder holding `index.<language>.md`, so the artifacts it cites — screenshots, snapshots, whatever a colophon's cells produce — sit beside the prose citing them. The language tag is BCP 47 and reaches `<html lang>` unchanged. A page's title lives in its front matter and the layout sets it, so a document has exactly one `<h1>` and the markdown starts at `##`.
+A page is a markdown file named `<name>.<language>.md`, and it becomes a folder holding `index.<language>.md` the day it carries artifacts — screenshots, snapshots, whatever a colophon's cells produce — so that what a page cites sits beside the prose citing it. Both spellings address the same page, and `verify` refuses a site where two files claim one address. The language tag is BCP 47 and reaches `<html lang>` unchanged. A page's title lives in its front matter and the layout sets it, so a document has exactly one `<h1>` and the markdown starts at `##`.
 
-Every URL is built by `Site.url` or `Site.absoluteUrl` and never written down, including the ones inside prose: a markdown link written as a site path is rewritten as it is rendered. The development server mounts the site under the path its `baseUrl` carries, so a link that works locally works published.
+Every URL is built by `Site.url` or `Site.absoluteUrl` and never written down, including the ones inside prose: a link is written to the markdown file it points at, so it resolves in an editor and on GitHub as well as here, and is rewritten to the page's address as it is rendered. A link to a file resolves where that file sits; anything else resolves against the page's own address. The development server mounts the site under the path its `baseUrl` carries, so a link that works locally works published.
 
 Markup is composed by the `html` tag, which escapes everything passing through it and leaves `TrustedHtml` alone. Front matter is written by whoever sends the pull request, so escaping is the default and trust is declared.
 
-Documentation belongs to the repository that documents itself and is gathered here at build time. Nothing about a sibling project is written down in this repo: the gathering is driven by `sources` in `site.config.json`.
+Documentation belongs to the repository that documents itself and is gathered here at build time. Nothing about a sibling project is written down in this repo: the gathering is driven by `sources` in `site.config.json`. A source is read where it stands — the sibling beside us when there is one, the clone `gather` makes when there is not — and is never copied in here.
 
 The site is readable with no JavaScript at all. Script is spent on what cannot be done without it — search, and the machine a colophon runs — never on delivering prose.
 

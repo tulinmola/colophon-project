@@ -24,6 +24,7 @@ jobs:
           node-version: 26
           cache: npm
       - run: npm ci
+      - run: npm run gather
       - run: npm run check
       - run: npm run build
       - uses: actions/configure-pages@v6

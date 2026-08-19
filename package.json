@@ -13,7 +13,8 @@
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest watch",
     "check": "npm run prettier:check && npm run lint && npm test && npm run verify",
-    "verify": "node generator/verify.js"
+    "verify": "node generator/verify.js",
+    "gather": "node generator/gather.js"
   },
   "keywords": [
     "colophon",
