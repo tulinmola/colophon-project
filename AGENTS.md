@@ -14,6 +14,10 @@ Markup is composed by the `html` tag, which escapes everything passing through i
 
 Documentation belongs to the repository that documents itself and is gathered here at build time. Nothing about a sibling project is written down in this repo: the gathering is driven by `sources` in `site.config.json`. A source is read where it stands — the sibling beside us when there is one, the clone `gather` makes when there is not — and is never copied in here.
 
+Beside every page the site writes what a machine reads: the markdown it was set from at `index.md`, `sitemap.xml` with an `hreflang` for every translation, `robots.txt`, `llms.txt`, `index.json` naming every page, and `build.json` recording what the build was made from. A record is generated and never written by hand.
+
+The site signs its own work. `build.json` names each source, where it was read and the commit it stood on; a source read from a tree with uncommitted changes answers to no commit at all, because it is no longer the one it left.
+
 The site is readable with no JavaScript at all. Script is spent on what cannot be done without it — search, and the machine a colophon runs — never on delivering prose.
 
 ## Voice

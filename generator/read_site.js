@@ -10,15 +10,15 @@ export function readSite() {
   const config = readConfig(),
     contentDirectory = join(ROOT, "content"),
     pages = readContent(contentDirectory, config.defaultLanguage),
-    origins = {}
+    sources = []
 
   for (const source of config.sources) {
     const resolved = resolveSource(source),
       gathered = readContent(resolved.directory, config.defaultLanguage, resolved.slug)
 
-    origins[resolved.slug] = resolved.origin
+    sources.push(resolved)
     pages.push(...gathered)
   }
 
-  return new Site(config, pages, origins)
+  return new Site(config, pages, sources)
 }

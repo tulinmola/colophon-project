@@ -1,4 +1,5 @@
 import { html } from "../../generator/html.js"
+import { structuredData } from "../../generator/structured_data.js"
 
 function pageLink(site, target, current) {
   const url = site.url(target.path)
@@ -36,6 +37,8 @@ export function base(page, site) {
   const homeUrl = site.url(home.path),
     canonicalUrl = site.absoluteUrl(page.path),
     styleUrl = site.url("/css/index.css"),
+    markdownUrl = site.url(`${page.path}index.md`),
+    record = structuredData(page, site),
     sections = site.navigation(page.language),
     items = sections.map(section => pageItem(site, section, page))
 
@@ -47,9 +50,14 @@ export function base(page, site) {
         <title>${documentTitle}</title>
         <meta name="description" content="${page.description}" />
         <link rel="canonical" href="${canonicalUrl}" />
+        <link rel="alternate" type="text/markdown" href="${markdownUrl}" />
         <link rel="stylesheet" href="${styleUrl}" />
+        <script type="application/ld+json">
+          ${record}
+        </script>
       </head>
       <body>
+        <a href="#text">Skip to the text</a>
         <header>
           <a href="${homeUrl}">${site.title}</a>
           <nav aria-label="Sections">
@@ -58,7 +66,7 @@ export function base(page, site) {
             </ul>
           </nav>
         </header>
-        <main>
+        <main id="text">
           <article>
             <h1>${page.title}</h1>
             ${site.render(page)}

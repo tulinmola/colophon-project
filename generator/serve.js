@@ -21,8 +21,10 @@ const CONTENT_TYPES = {
   ".md": "text/markdown; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".txt": "text/plain; charset=utf-8",
   ".wasm": "application/wasm",
-  ".woff2": "font/woff2"
+  ".woff2": "font/woff2",
+  ".xml": "application/xml; charset=utf-8"
 }
 
 // Served under the path baseUrl carries, so a link that works here works

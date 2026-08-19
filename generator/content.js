@@ -6,6 +6,8 @@ export function readContent(directory, defaultLanguage, prefix = "") {
   const names = readdirSync(directory, { recursive: true }),
     pages = []
 
+  names.sort()
+
   for (const name of names) {
     if (!name.endsWith(".md")) {
       continue

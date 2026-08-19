@@ -34,6 +34,12 @@ The documentation of each project belongs to the repository that writes it, and 
 
 A source is read where it stands. When the sibling repository is checked out beside this one it is read from there, so a page can be written and looked at before it is committed; `npm run gather` clones what is missing into `.cache/` for a machine with no siblings beside it. Nothing is copied into this repository, and every build says which of the two it read.
 
+## What a machine reads
+
+Every page is served twice: as a document, and as the markdown it was set from, at the same address with `index.md` appended.
+
+Beside them the site writes `sitemap.xml`, `robots.txt`, [`llms.txt`](https://llmstxt.org) and `index.json`, which names every page with its address and its description. `build.json` records what each build was made from: which repository, which commit, and whether the tree it was read from was clean.
+
 ## Publishing
 
 Pushing to `main` builds the site and publishes it to GitHub Pages.

@@ -3,14 +3,14 @@ import { renderMarkdown } from "./markdown.js"
 export class Site {
   #basePath
   #config
-  #origins
   #pages
+  #sources
 
-  constructor(config, pages, origins = {}) {
+  constructor(config, pages, sources = []) {
     this.#basePath = new URL(config.baseUrl).pathname
     this.#config = config
-    this.#origins = origins
     this.#pages = pages
+    this.#sources = sources
   }
 
   get defaultLanguage() {
@@ -21,8 +21,16 @@ export class Site {
     return this.#config.languages
   }
 
-  get origins() {
-    return this.#origins
+  get baseUrl() {
+    return this.#config.baseUrl
+  }
+
+  get description() {
+    return this.#config.description
+  }
+
+  get sources() {
+    return this.#sources
   }
 
   get pages() {
@@ -61,6 +69,14 @@ export class Site {
       )
 
     return children.sort((first, second) => first.order - second.order)
+  }
+
+  translationsOf(page) {
+    return this.#pages.filter(
+      other =>
+        other.segments.length == page.segments.length &&
+        page.segments.every((segment, index) => other.segments[index] == segment)
+    )
   }
 
   pageAt(relativePath) {
