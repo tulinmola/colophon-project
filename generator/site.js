@@ -1,3 +1,5 @@
+import { renderMarkdown } from "./markdown.js"
+
 export class Site {
   #basePath
   #config
@@ -41,6 +43,10 @@ export class Site {
     )
 
     return sections.sort((first, second) => first.order - second.order)
+  }
+
+  render(page) {
+    return renderMarkdown(page.body, this)
   }
 
   url(path) {

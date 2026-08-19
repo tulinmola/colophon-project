@@ -43,7 +43,7 @@ export function base(page, site) {
         <main>
           <article>
             <h1>${page.title}</h1>
-            ${page.html}
+            ${site.render(page)}
           </article>
         </main>
         <footer>

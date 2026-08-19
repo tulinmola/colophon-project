@@ -1,5 +1,4 @@
 import { parse as parseYaml } from "yaml"
-import { renderMarkdown } from "./markdown.js"
 
 const FILE_NAME = /^index\.(?<language>[a-z]{2,3}(?:-[A-Za-z0-9]+)*)\.md$/u
 const FRONT_MATTER = /^---\r?\n(?<metadata>[\s\S]*?)\r?\n---\r?\n(?<body>[\s\S]*)$/u
@@ -14,7 +13,6 @@ function pathOf(segments, language, defaultLanguage) {
 
 export class Page {
   #body
-  #html = null
   #language
   #metadata
   #path
@@ -43,14 +41,12 @@ export class Page {
     this.#source = source
   }
 
-  get description() {
-    return this.#metadata.description
+  get body() {
+    return this.#body
   }
 
-  get html() {
-    this.#html ??= renderMarkdown(this.#body)
-
-    return this.#html
+  get description() {
+    return this.#metadata.description
   }
 
   get language() {

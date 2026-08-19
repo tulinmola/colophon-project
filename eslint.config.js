@@ -9,6 +9,7 @@ export default defineConfig([
     extends: ["js/all"],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
+      camelcase: ["error", { properties: "never" }],
       "capitalized-comments": "off",
       "class-methods-use-this": "off",
       "consistent-this": ["error", "self"],

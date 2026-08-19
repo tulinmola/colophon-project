@@ -8,7 +8,7 @@ The generator is a pipeline over plain files, and a stage knows nothing of the s
 
 A page is a folder holding `index.<language>.md`, so the artifacts it cites — screenshots, snapshots, whatever a colophon's cells produce — sit beside the prose citing them. The language tag is BCP 47 and reaches `<html lang>` unchanged. A page's title lives in its front matter and the layout sets it, so a document has exactly one `<h1>` and the markdown starts at `##`.
 
-Every URL is built by `Site.url` or `Site.absoluteUrl` and never written down. The development server mounts the site under the path its `baseUrl` carries, so a link that works locally works published, and moving from what GitHub gives us to a domain of our own is one line of `site.config.json`.
+Every URL is built by `Site.url` or `Site.absoluteUrl` and never written down, including the ones inside prose: a markdown link written as a site path is rewritten as it is rendered. The development server mounts the site under the path its `baseUrl` carries, so a link that works locally works published, and moving from what GitHub gives us to a domain of our own is one line of `site.config.json`.
 
 Markup is composed by the `html` tag, which escapes everything passing through it and leaves `TrustedHtml` alone. Front matter is written by whoever sends the pull request, so escaping is the default and trust is declared.
 
@@ -37,7 +37,8 @@ The site is readable with no JavaScript at all. Script is spent on what cannot b
 ## Code style
 
 - Prettier decides formatting and is never a discussion: `npm run prettier:write`, `npm run prettier:check` to verify. ESLint decides the rest: `npm run lint`.
-- Prettier formats the markup inside an `html` template, so a layout's indentation is Prettier's and the emitted document carries it. `emit` is what guarantees a written file ends with exactly one newline.
+- Prettier formats the markup inside an `html` template, so a layout's indentation is Prettier's and the emitted document carries it. `emit` is what guarantees a written file ends with exactly one newline. A test asserts on what a template composes, never on its whitespace, which is Prettier's.
+- ESLint allows snake_case in property names (`camelcase` with `properties: "never"`), because a foreign API's names are that API's to choose: `markdown-it` calls its rule `link_open` and we do not rename what we do not own.
 - Imports carry their `.js` extension: Node resolves specifiers itself and there is no bundler to guess. This is the one place the player's rule does not hold, and only because it cannot.
 - Plain CSS, not Sass. Custom properties, nesting and `light-dark()` cover what a stylesheet of tokens and typography needs, and the CSS in the browser is the CSS in the repository.
 - Avoid defensive guards that hide implementation errors; only add checks when the condition can legitimately occur at runtime. A malformed page is an authoring error and says so.

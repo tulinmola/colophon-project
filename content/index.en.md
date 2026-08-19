@@ -13,8 +13,10 @@ Preserving these games means more than keeping the files alive. It means underst
 
 ## The parts
 
-The **emulator** is the instrument: a machine built a chip at a time in C with no dependencies, cycle-stepped, and readable from outside without disturbing what it is doing.
+The [emulator](https://github.com/tulinmola/colophon-emulator) is the instrument: a machine built a chip at a time in C with no dependencies, cycle-stepped, and readable from outside without disturbing what it is doing.
 
-The **player** carries that machine into a page, so a reader can run it beside the account of it and hold the two against each other. It began as a way to check the emulator and turned into the workbench.
+The [player](https://github.com/tulinmola/colophon-player) carries that machine into a page, so a reader can run it beside the account of it and hold the two against each other. It began as a way to check the emulator and turned into the workbench.
 
-The **archive** is where the colophons will be kept, each one an argument with its evidence attached. There is nothing in it yet.
+The archive is where the colophons will be kept, each one an argument with its evidence attached. There is nothing in it yet.
+
+What a colophon has to prove before it is published is set out in [the vision](/en/vision/).

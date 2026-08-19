@@ -9,8 +9,21 @@ const markdownIt = new MarkdownIt({ html: true, typographer: true }).use(anchor,
   permalink: anchor.permalink.headerLink({ class: null })
 })
 
-export function renderMarkdown(text) {
-  const markup = markdownIt.render(text)
+markdownIt.renderer.rules.link_open = function (tokens, index, options, env, renderer) {
+  const token = tokens[index],
+    href = token.attrGet("href")
+
+  if (href.startsWith("/")) {
+    const url = env.site.url(href)
+
+    token.attrSet("href", url)
+  }
+
+  return renderer.renderToken(tokens, index, options)
+}
+
+export function renderMarkdown(text, site) {
+  const markup = markdownIt.render(text, { site })
 
   return new TrustedHtml(markup)
 }
