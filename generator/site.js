@@ -5,12 +5,14 @@ export class Site {
   #config
   #pages
   #sources
+  #strings
 
-  constructor(config, pages, sources = []) {
+  constructor(config, pages, sources = [], strings = {}) {
     this.#basePath = new URL(config.baseUrl).pathname
     this.#config = config
     this.#pages = pages
     this.#sources = sources
+    this.#strings = strings
   }
 
   get defaultLanguage() {
@@ -31,6 +33,10 @@ export class Site {
 
   get sources() {
     return this.#sources
+  }
+
+  get strings() {
+    return this.#strings
   }
 
   get pages() {
@@ -89,6 +95,17 @@ export class Site {
     )
 
     return ancestors.sort((first, second) => first.segments.length - second.segments.length)
+  }
+
+  stringsFor(language) {
+    const entries = Object.entries(this.#strings),
+      strings = {}
+
+    for (const [name, translations] of entries) {
+      strings[name] = translations[language]
+    }
+
+    return strings
   }
 
   trailTo(page) {

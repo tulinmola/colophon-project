@@ -28,6 +28,8 @@ A link names the markdown file it points at, which is what makes it work in an e
 
 Adding a page is adding that file. Nothing else knows the site's shape.
 
+The few words the layout says for itself — the skip link, the labels a screen reader reads, the line at the foot — are in `src/strings.yml`, each with a line per language.
+
 ## The parts
 
 The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them; the [player](https://github.com/tulinmola/colophon-player) is the first, and the emulator still keeps everything in its README.

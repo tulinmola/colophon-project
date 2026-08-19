@@ -38,10 +38,10 @@ function trailItem(site, step, page) {
   return html`<li>${link}</li>`
 }
 
-function breadcrumb(site, trail, page) {
+function breadcrumb(site, trail, page, strings) {
   const items = trail.map(step => trailItem(site, step, page))
 
-  return html`<nav aria-label="Breadcrumb">
+  return html`<nav aria-label="${strings.breadcrumb}">
     <ol>
       ${items}
     </ol>
@@ -57,9 +57,10 @@ export function base(page, site) {
     canonicalUrl = site.absoluteUrl(page.path),
     styleUrl = site.url("/css/index.css"),
     markdownUrl = site.url(`${page.path}index.md`),
+    strings = site.stringsFor(page.language),
     trail = site.trailTo(page),
     record = structuredData(page, site, trail),
-    trailNav = trail.length > 0 ? breadcrumb(site, trail, page) : "",
+    trailNav = trail.length > 0 ? breadcrumb(site, trail, page, strings) : "",
     sections = site.navigation(page.language),
     items = sections.map(section => pageItem(site, section, page))
 
@@ -78,10 +79,10 @@ export function base(page, site) {
         </script>
       </head>
       <body>
-        <a href="#text">Skip to the text</a>
+        <a href="#text">${strings.skipToText}</a>
         <header>
           <a href="${homeUrl}">${site.title}</a>
-          <nav aria-label="Sections">
+          <nav aria-label="${strings.sections}">
             <ul>
               ${items}
             </ul>
@@ -95,7 +96,7 @@ export function base(page, site) {
           </article>
         </main>
         <footer>
-          <p>The Colophon Project, written in the open under the MIT licence.</p>
+          <p>${strings.footer}</p>
         </footer>
       </body>
     </html> `

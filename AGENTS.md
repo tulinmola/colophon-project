@@ -18,6 +18,8 @@ Beside every page the site writes what a machine reads: the markdown it was set 
 
 The site signs its own work. `build.json` names each source, where it was read and the commit it stood on; a source read from a tree with uncommitted changes answers to no commit at all, because it is no longer the one it left.
 
+Every word the layout says of its own accord lives in `src/strings.yml`, keyed by string and then by language, so the English is beside the translation of it. `verify` refuses a string that says nothing in a language the site is written in, and one that speaks a language it does not: a dozen words are too few to excuse a page half in one tongue. Nothing falls back, so no English can reach a Spanish page unnoticed.
+
 The site is readable with no JavaScript at all. Script is spent on what cannot be done without it — search, and the machine a colophon runs — never on delivering prose.
 
 ## Voice

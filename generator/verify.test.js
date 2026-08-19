@@ -94,6 +94,31 @@ describe("verify", function () {
     expect(problems).toEqual(["/: links to nowhere.en.md, which is no page"])
   })
 
+  it("reports a string that says nothing in a language the site is written in", function () {
+    const strings = { sections: { en: "Sections" } },
+      languages = {
+        en: { name: "English", direction: "ltr" },
+        es: { name: "Castellano", direction: "ltr" }
+      },
+      config = { ...CONFIG, languages },
+      page = pageAt("index.en.md", COMPLETE),
+      missing = pageAt("not-found/index.en.md", MISSING),
+      site = new Site(config, [page, missing], [], strings),
+      problems = verify(site)
+
+    expect(problems).toEqual(["strings: sections says nothing in es"])
+  })
+
+  it("reports a string speaking a language the site does not", function () {
+    const strings = { sections: { en: "Sections", fr: "Sections" } },
+      page = pageAt("index.en.md", COMPLETE),
+      missing = pageAt("not-found/index.en.md", MISSING),
+      site = new Site(CONFIG, [page, missing], [], strings),
+      problems = verify(site)
+
+    expect(problems).toEqual(["strings: sections speaks fr, which the site does not"])
+  })
+
   it("reports a site with no page to answer an unknown address", function () {
     const page = pageAt("index.en.md", COMPLETE),
       site = new Site(CONFIG, [page]),

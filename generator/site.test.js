@@ -84,6 +84,28 @@ describe("Site", function () {
     expect(markup).toContain('href="/colophon-project/en/vision/"')
   })
 
+  it("says each string in the language asked for", function () {
+    const strings = {
+        sections: { en: "Sections", es: "Secciones" },
+        skipToText: { en: "Skip to the text", es: "Saltar al texto" }
+      },
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [], [], strings)
+
+    expect(site.stringsFor("es")).toEqual({
+      sections: "Secciones",
+      skipToText: "Saltar al texto"
+    })
+  })
+
+  it("says nothing at all where a string has not been translated", function () {
+    const strings = { sections: { en: "Sections" } },
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [], [], strings)
+
+    expect(site.stringsFor("es").sections).toBeUndefined()
+  })
+
   it("trails a page through the sections above it, from the top down", function () {
     const home = pageAt("index.en.md"),
       player = pageAt("player/index.en.md", "title: Player\ndescription: A."),

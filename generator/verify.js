@@ -12,6 +12,30 @@ function hrefsIn(markup) {
   return hrefs
 }
 
+function stringProblems(site) {
+  const languages = Object.keys(site.languages),
+    entries = Object.entries(site.strings),
+    problems = []
+
+  for (const [name, translations] of entries) {
+    for (const language of languages) {
+      if (!translations[language]) {
+        problems.push(`strings: ${name} says nothing in ${language}`)
+      }
+    }
+
+    const spoken = Object.keys(translations)
+
+    for (const language of spoken) {
+      if (!languages.includes(language)) {
+        problems.push(`strings: ${name} speaks ${language}, which the site does not`)
+      }
+    }
+  }
+
+  return problems
+}
+
 export function verify(site) {
   const problems = [],
     addresses = new Set()
@@ -47,6 +71,10 @@ export function verify(site) {
       }
     }
   }
+
+  const stringGaps = stringProblems(site)
+
+  problems.push(...stringGaps)
 
   if (!site.notFoundPage()) {
     problems.push("no page is marked notFound, so there is nothing to serve as 404.html")

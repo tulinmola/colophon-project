@@ -1,0 +1,19 @@
+# Every word the layout says, in every language the site is written in.
+# A string missing a language fails `npm run verify`: nothing here is long
+# enough to excuse a page half in one tongue and half in another.
+
+# The first thing a keyboard reaches, jumping past the navigation to the prose.
+skipToText:
+  en: Skip to the text
+
+# Announced by a screen reader for the navigation of sections. Never shown.
+sections:
+  en: Sections
+
+# Announced by a screen reader for the trail of sections above a page.
+breadcrumb:
+  en: Breadcrumb
+
+# The line at the foot of every page.
+footer:
+  en: Written in the open under the MIT licence.
