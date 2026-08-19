@@ -4,7 +4,7 @@
 
 A manuscript was copied in one place and read in another. The scriptorium bound it; somewhere else a room was kept warm and lit for the people who came to read what had been written.
 
-This is that room. [Colophon](https://github.com/tulinmola/colophon-emulator) opens the boxes of the 8-bit era and [the player](https://github.com/tulinmola/colophon-player) carries the machine into a page; here is where the account of them is read, in whatever language the reader has, by people and by machines alike.
+This is that room. The [emulator](https://github.com/tulinmola/colophon-emulator) opens the boxes of the 8-bit era and the [player](https://github.com/tulinmola/colophon-player) carries the machine into a page; here is where the account of them is read, in whatever language the reader has, by people and by machines alike.
 
 ## Building
 
