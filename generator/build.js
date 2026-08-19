@@ -24,6 +24,6 @@ if (import.meta.main) {
   for (const source of site.sources) {
     const stamp = source.commit ? source.commit.slice(0, 7) : "an unclean tree"
 
-    console.log(`  ${source.slug} from ${source.origin} at ${stamp}`)
+    console.log(`  ${source.repository} from ${source.origin} at ${stamp}`)
   }
 }

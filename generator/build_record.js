@@ -11,7 +11,19 @@ function recordOf(source) {
 }
 
 export function buildRecord(site, builtAt) {
-  const sources = site.sources.map(recordOf)
+  const own = site.ownSource(),
+    gathered = site.sources.filter(source => source.slug != ""),
+    sources = gathered.map(recordOf)
 
-  return { baseUrl: site.baseUrl, builtAt, pages: site.pages.length, sources, title: site.title }
+  return {
+    baseUrl: site.baseUrl,
+    builtAt,
+    clean: own.clean,
+    commit: own.commit,
+    committedAt: own.committedAt,
+    pages: site.pages.length,
+    repository: own.repository,
+    sources,
+    title: site.title
+  }
 }

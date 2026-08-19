@@ -19,10 +19,20 @@ function pageAt(relativePath, metadata, body = "Prose.\n") {
   return new Page(relativePath, source, "en")
 }
 
+const OWN = {
+  clean: true,
+  commit: "0000000000000000000000000000000000000000",
+  committedAt: "2026-08-20T00:00:00+02:00",
+  path: "content",
+  ref: "main",
+  repository: "tulinmola/colophon-project",
+  slug: ""
+}
+
 function siteOf(pages) {
   const missing = pageAt("not-found/index.en.md", MISSING)
 
-  return new Site(CONFIG, [...pages, missing])
+  return new Site(CONFIG, [...pages, missing], [OWN])
 }
 
 describe("verify", function () {
@@ -103,7 +113,7 @@ describe("verify", function () {
       config = { ...CONFIG, languages },
       page = pageAt("index.en.md", COMPLETE),
       missing = pageAt("not-found/index.en.md", MISSING),
-      site = new Site(config, [page, missing], [], strings),
+      site = new Site(config, [page, missing], [OWN], strings),
       problems = verify(site)
 
     expect(problems).toEqual(["strings: sections says nothing in es"])
@@ -113,7 +123,7 @@ describe("verify", function () {
     const strings = { sections: { en: "Sections", fr: "Sections" } },
       page = pageAt("index.en.md", COMPLETE),
       missing = pageAt("not-found/index.en.md", MISSING),
-      site = new Site(CONFIG, [page, missing], [], strings),
+      site = new Site(CONFIG, [page, missing], [OWN], strings),
       problems = verify(site)
 
     expect(problems).toEqual(["strings: sections speaks fr, which the site does not"])
@@ -130,7 +140,7 @@ describe("verify", function () {
 
   it("reports a site with no page to answer an unknown address", function () {
     const page = pageAt("index.en.md", COMPLETE),
-      site = new Site(CONFIG, [page]),
+      site = new Site(CONFIG, [page], [OWN]),
       problems = verify(site)
 
     expect(problems).toEqual([

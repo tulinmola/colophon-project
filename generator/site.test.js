@@ -84,6 +84,33 @@ describe("Site", function () {
     expect(markup).toContain('href="/colophon-project/en/vision/"')
   })
 
+  it("points a gathered page at the repository that keeps it", function () {
+    const page = pageAt("emulator/core.en.md"),
+      sources = [
+        { slug: "", path: "content", ref: "main", repository: "tulinmola/colophon-project" },
+        { slug: "emulator", path: "docs", ref: "main", repository: "tulinmola/colophon-emulator" }
+      ],
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [page], sources)
+
+    expect(site.sourceUrl(page)).toBe(
+      "https://github.com/tulinmola/colophon-emulator/blob/main/docs/core.en.md"
+    )
+  })
+
+  it("points a page of its own at this repository", function () {
+    const page = pageAt("vision/index.en.md"),
+      sources = [
+        { slug: "", path: "content", ref: "main", repository: "tulinmola/colophon-project" }
+      ],
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [page], sources)
+
+    expect(site.sourceUrl(page)).toBe(
+      "https://github.com/tulinmola/colophon-project/blob/main/content/vision/index.en.md"
+    )
+  })
+
   it("stands a gathered section where the site says, not where the source says", function () {
     const emulator = pageAt("emulator/index.en.md", "title: Emulator\ndescription: A.\norder: 9"),
       player = pageAt("player/index.en.md", "title: Player\ndescription: B.\norder: 9"),

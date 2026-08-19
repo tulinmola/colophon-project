@@ -42,6 +42,12 @@ Every page is served twice: as a document, and as the markdown it was set from, 
 
 Beside them the site writes `sitemap.xml`, `robots.txt`, [`llms.txt`](https://llmstxt.org) and `index.json`, which names every page with its address and its description. `build.json` records what each build was made from: which repository, which commit, and whether the tree it was read from was clean.
 
+## Where a page is kept
+
+Every page says at its foot which repository it is written in, and links to the file. Most of them are not written here.
+
+`The imprint` gathers that in one place: the three repositories and the commit each stood at when the site was last built. It is written by the build, not by hand, and `build.json` says the same thing to a machine.
+
 ## Publishing
 
 Pushing to `main` builds the site and publishes it to GitHub Pages.

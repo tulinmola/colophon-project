@@ -31,11 +31,22 @@ describe("buildRecord", function () {
         repository: "tulinmola/colophon-player",
         slug: "player"
       },
-      site = new Site(CONFIG, [pageAt("index.en.md")], [source]),
+      own = {
+        clean: false,
+        commit: null,
+        committedAt: null,
+        path: "content",
+        ref: "main",
+        repository: "tulinmola/colophon-project",
+        slug: ""
+      },
+      site = new Site(CONFIG, [pageAt("index.en.md")], [own, source]),
       record = buildRecord(site, "2026-08-19T21:00:00.000Z")
 
     expect(record.builtAt).toBe("2026-08-19T21:00:00.000Z")
+    expect(record.repository).toBe("tulinmola/colophon-project")
+    expect(record.clean).toBe(false)
+    expect(record.sources).toHaveLength(1)
     expect(record.sources[0].commit).toBe("e7e16edbc1ef8478a44463b8b6a2da7a1c8d6f2f")
-    expect(record.sources[0].clean).toBe(true)
   })
 })

@@ -2,6 +2,8 @@
   "title": "The Colophon Project",
   "description": "The games of the 8-bit era, opened and read from the inside, and given the note their authors never wrote.",
   "baseUrl": "https://tulinmola.github.io/colophon-project/",
+  "repository": "tulinmola/colophon-project",
+  "ref": "main",
   "defaultLanguage": "en",
   "languages": {
     "en": {

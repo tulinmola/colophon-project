@@ -17,3 +17,27 @@ breadcrumb:
 # The line at the foot of every page.
 footer:
   en: Written in the open under the MIT licence.
+
+# Follows the prose, before a link to the repository the page is written in.
+keptIn:
+  en: This page is kept in
+
+# The page recording what the site was made from.
+imprintTitle:
+  en: The imprint
+
+imprintDescription:
+  en: The repositories this site is made from, and the commit each of them stood at when it was last built.
+
+imprintIntro:
+  en: A manuscript says at its end who copied it and from what. This site is copied from three repositories, and this is the account of them as they stood when these pages were last written.
+
+imprintRepository:
+  en: Repository
+
+imprintCommit:
+  en: Commit
+
+# Stands in for a commit when a page was built from a tree with changes in it.
+imprintUnclean:
+  en: an unclean tree

@@ -130,6 +130,23 @@ export class Site {
     return [...ancestors, page]
   }
 
+  ownSource() {
+    return this.#sources.find(source => source.slug == "")
+  }
+
+  sourceOf(page) {
+    const gathered = this.#sources.find(source => source.slug == page.segments[0])
+
+    return gathered ?? this.ownSource()
+  }
+
+  sourceUrl(page) {
+    const source = this.sourceOf(page),
+      within = source.slug ? page.relativePath.slice(source.slug.length + 1) : page.relativePath
+
+    return `https://github.com/${source.repository}/blob/${source.ref}/${source.path}/${within}`
+  }
+
   pageAt(relativePath) {
     return this.#pages.find(page => page.relativePath == relativePath)
   }

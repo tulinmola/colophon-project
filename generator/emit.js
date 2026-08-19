@@ -1,10 +1,6 @@
 import { cpSync, mkdirSync, rmSync, writeFileSync } from "node:fs"
-import { buildRecord } from "./build_record.js"
-import { catalogue } from "./catalogue.js"
 import { join } from "node:path"
-import { llmsText } from "./llms.js"
-import { robots } from "./robots.js"
-import { sitemap } from "./sitemap.js"
+import { recordsOf } from "./records.js"
 
 function withFinalNewline(content) {
   const text = content.toString()
@@ -29,19 +25,12 @@ function emitNotFound(site, layout, outputDirectory) {
 }
 
 function emitRecords(site, outputDirectory, builtAt) {
-  const rules = robots(site),
-    urls = sitemap(site),
-    guide = llmsText(site),
-    index = catalogue(site),
-    record = buildRecord(site, builtAt),
-    indexJson = JSON.stringify(index, null, 2),
-    recordJson = JSON.stringify(record, null, 2)
+  const records = recordsOf(site, builtAt),
+    entries = Object.entries(records)
 
-  write(outputDirectory, "robots.txt", rules)
-  write(outputDirectory, "sitemap.xml", urls)
-  write(outputDirectory, "llms.txt", guide)
-  write(outputDirectory, "index.json", indexJson)
-  write(outputDirectory, "build.json", recordJson)
+  for (const [name, content] of entries) {
+    write(outputDirectory, name, content)
+  }
 }
 
 export function emit(site, layout, outputDirectory, styleDirectory, builtAt) {

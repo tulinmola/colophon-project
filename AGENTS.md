@@ -20,6 +20,8 @@ The site signs its own work. `build.json` names each source, where it was read a
 
 Every word the layout says of its own accord lives in `src/strings.yml`, keyed by string and then by language, so the English is beside the translation of it. `verify` refuses a string that says nothing in a language the site is written in, and one that speaks a language it does not: a dozen words are too few to excuse a page half in one tongue. Nothing falls back, so no English can reach a Spanish page unnoticed.
 
+A page says at its foot which repository keeps it, because most of them are not kept here. This repository is a source like the others — it is the one `content/` is read from — so every page has one, and `build.json` records the commit of all three. A page marked `generated` in its front matter was written by the build and has no file to point at.
+
 The site is readable with no JavaScript at all. Script is spent on what cannot be done without it — search, and the machine a colophon runs — never on delivering prose.
 
 ## Voice

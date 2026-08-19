@@ -55,6 +55,10 @@ export class Page {
     return this.#metadata.description
   }
 
+  get generated() {
+    return this.#metadata.generated == true
+  }
+
   get language() {
     return this.#language
   }

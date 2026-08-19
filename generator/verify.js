@@ -1,4 +1,5 @@
 import { readSite } from "./read_site.js"
+import { recordsOf } from "./records.js"
 
 const HREF = /href="(?<href>[^"]*)"/gu
 
@@ -83,6 +84,15 @@ function orderProblems(site) {
 export function verify(site) {
   const problems = [],
     addresses = new Set()
+
+  const records = recordsOf(site, null),
+    names = Object.keys(records)
+
+  for (const name of names) {
+    const address = site.url(`/${name}`)
+
+    addresses.add(address)
+  }
 
   for (const page of site.pages) {
     const address = site.url(page.path)

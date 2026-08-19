@@ -48,6 +48,15 @@ function breadcrumb(site, trail, page, strings) {
   </nav>`
 }
 
+function keptIn(site, page, strings) {
+  const source = site.sourceOf(page),
+    url = site.sourceUrl(page)
+
+  return html`<footer>
+    <p>${strings.keptIn} <a href="${url}">${source.repository}</a>.</p>
+  </footer>`
+}
+
 export function base(page, site) {
   const home = site.homeOf(page.language),
     language = site.languages[page.language],
@@ -60,6 +69,7 @@ export function base(page, site) {
     strings = site.stringsFor(page.language),
     trail = site.trailTo(page),
     record = structuredData(page, site, trail),
+    written = page.generated ? "" : keptIn(site, page, strings),
     trailNav = trail.length > 0 ? breadcrumb(site, trail, page, strings) : "",
     sections = site.navigation(page.language),
     items = sections.map(section => pageItem(site, section, page))
@@ -92,7 +102,7 @@ export function base(page, site) {
           ${trailNav}
           <article>
             <h1>${page.title}</h1>
-            ${site.render(page)}
+            ${site.render(page)} ${written}
           </article>
         </main>
         <footer>
