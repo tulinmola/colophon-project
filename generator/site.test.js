@@ -84,6 +84,31 @@ describe("Site", function () {
     expect(markup).toContain('href="/colophon-project/en/vision/"')
   })
 
+  it("stands a gathered section where the site says, not where the source says", function () {
+    const emulator = pageAt("emulator/index.en.md", "title: Emulator\ndescription: A.\norder: 9"),
+      player = pageAt("player/index.en.md", "title: Player\ndescription: B.\norder: 9"),
+      sources = [
+        { slug: "emulator", order: 2 },
+        { slug: "player", order: 3 }
+      ],
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [player, emulator], sources),
+      titles = site.navigation("en").map(page => page.title)
+
+    expect(site.orderOf(emulator)).toBe(2)
+    expect(titles).toEqual(["Emulator", "Player"])
+  })
+
+  it("leaves a page inside a source ordered by its own front matter", function () {
+    const section = pageAt("emulator/index.en.md", "title: Emulator\ndescription: A.\norder: 9"),
+      machine = pageAt("emulator/machine.en.md", "title: Machine\ndescription: B.\norder: 4"),
+      sources = [{ slug: "emulator", order: 2 }],
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [section, machine], sources)
+
+    expect(site.orderOf(machine)).toBe(4)
+  })
+
   it("says each string in the language asked for", function () {
     const strings = {
         sections: { en: "Sections", es: "Secciones" },

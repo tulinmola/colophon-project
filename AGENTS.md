@@ -12,7 +12,7 @@ Every URL is built by `Site.url` or `Site.absoluteUrl` and never written down, i
 
 Markup is composed by the `html` tag, which escapes everything passing through it and leaves `TrustedHtml` alone. Front matter is written by whoever sends the pull request, so escaping is the default and trust is declared.
 
-Documentation belongs to the repository that documents itself and is gathered here at build time. Nothing about a sibling project is written down in this repo: the gathering is driven by `sources` in `site.config.json`. A source is read where it stands — the sibling beside us when there is one, the clone `gather` makes when there is not — and is never copied in here.
+Documentation belongs to the repository that documents itself and is gathered here at build time. Nothing about a sibling project is written down in this repo: the gathering is driven by `sources` in `site.config.json`. A source is read where it stands — the sibling beside us when there is one, the clone `gather` makes when there is not — and is never copied in here. Where a gathered section sits in the navigation is said by `sources`, never by the sibling: a section's own order places only the pages inside it.
 
 Beside every page the site writes what a machine reads: the markdown it was set from at `index.md`, `sitemap.xml` with an `hreflang` for every translation, `robots.txt`, `llms.txt`, `index.json` naming every page, and `build.json` recording what the build was made from. A record is generated and never written by hand.
 

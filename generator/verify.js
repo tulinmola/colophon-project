@@ -36,6 +36,50 @@ function stringProblems(site) {
   return problems
 }
 
+function tiesIn(site, pages) {
+  const taken = new Map(),
+    problems = []
+
+  for (const page of pages) {
+    const order = site.orderOf(page)
+
+    if (taken.has(order)) {
+      const other = taken.get(order)
+
+      problems.push(`${page.path}: stands at ${order}, where ${other} already stands`)
+    }
+
+    taken.set(order, page.path)
+  }
+
+  return problems
+}
+
+function orderProblems(site) {
+  const languages = Object.keys(site.languages),
+    problems = []
+
+  for (const language of languages) {
+    const sections = site.navigation(language),
+      ties = tiesIn(site, sections)
+
+    problems.push(...ties)
+  }
+
+  for (const page of site.pages) {
+    if (page.segments.length == 0) {
+      continue
+    }
+
+    const children = site.childrenOf(page),
+      ties = tiesIn(site, children)
+
+    problems.push(...ties)
+  }
+
+  return problems
+}
+
 export function verify(site) {
   const problems = [],
     addresses = new Set()
@@ -72,9 +116,10 @@ export function verify(site) {
     }
   }
 
-  const stringGaps = stringProblems(site)
+  const stringGaps = stringProblems(site),
+    orderTies = orderProblems(site)
 
-  problems.push(...stringGaps)
+  problems.push(...stringGaps, ...orderTies)
 
   if (!site.notFoundPage()) {
     problems.push("no page is marked notFound, so there is nothing to serve as 404.html")

@@ -11,7 +11,16 @@
   },
   "sources": [
     {
+      "slug": "emulator",
+      "order": 2,
+      "repository": "tulinmola/colophon-emulator",
+      "ref": "main",
+      "path": "docs",
+      "development": "../colophon-emulator/docs"
+    },
+    {
       "slug": "player",
+      "order": 3,
       "repository": "tulinmola/colophon-player",
       "ref": "main",
       "path": "docs",

@@ -119,6 +119,15 @@ describe("verify", function () {
     expect(problems).toEqual(["strings: sections speaks fr, which the site does not"])
   })
 
+  it("reports two sections standing in the same place", function () {
+    const first = pageAt("vision/index.en.md", "title: Vision\ndescription: A.\norder: 1"),
+      second = pageAt("archive/index.en.md", "title: Archive\ndescription: B.\norder: 1"),
+      site = siteOf([first, second]),
+      problems = verify(site)
+
+    expect(problems).toEqual(["/en/archive/: stands at 1, where /en/vision/ already stands"])
+  })
+
   it("reports a site with no page to answer an unknown address", function () {
     const page = pageAt("index.en.md", COMPLETE),
       site = new Site(CONFIG, [page]),

@@ -32,7 +32,7 @@ The few words the layout says for itself — the skip link, the labels a screen 
 
 ## The parts
 
-The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them; the [player](https://github.com/tulinmola/colophon-player) is the first, and the emulator still keeps everything in its README.
+The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them — the [emulator](https://github.com/tulinmola/colophon-emulator) and the [player](https://github.com/tulinmola/colophon-player) — and says where each of them sits in the navigation, because two repositories that know nothing of each other cannot agree on that.
 
 A source is read where it stands. When the sibling repository is checked out beside this one it is read from there, so a page can be written and looked at before it is committed; `npm run gather` clones what is missing into `.cache/` for a machine with no siblings beside it. Nothing is copied into this repository, and every build says which of the two it read.
 

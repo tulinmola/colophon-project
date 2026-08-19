@@ -56,6 +56,7 @@ export function resolveSource(source) {
   return {
     ...state,
     ...located,
+    order: source.order,
     ref: source.ref,
     repository: source.repository,
     slug: source.slug

@@ -57,12 +57,24 @@ export class Site {
     return this.#pages.find(page => page.language == language && page.segments.length == 0)
   }
 
+  // Two sibling repositories cannot agree on where their sections sit in a
+  // third, so the site says. A section's own order places its own pages.
+  orderOf(page) {
+    const source = this.#sources.find(entry => entry.slug == page.segments[0])
+
+    if (source && page.segments.length == 1) {
+      return source.order
+    }
+
+    return page.order
+  }
+
   navigation(language) {
     const sections = this.#pages.filter(
       page => page.language == language && page.segments.length == 1 && !page.notFound
     )
 
-    return sections.sort((first, second) => first.order - second.order)
+    return sections.sort((first, second) => this.orderOf(first) - this.orderOf(second))
   }
 
   childrenOf(section) {
@@ -74,7 +86,7 @@ export class Site {
           section.segments.every((segment, index) => page.segments[index] == segment)
       )
 
-    return children.sort((first, second) => first.order - second.order)
+    return children.sort((first, second) => this.orderOf(first) - this.orderOf(second))
   }
 
   translationsOf(page) {
