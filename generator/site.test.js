@@ -84,6 +84,40 @@ describe("Site", function () {
     expect(markup).toContain('href="/colophon-project/en/vision/"')
   })
 
+  it("trails a page through the sections above it, from the top down", function () {
+    const home = pageAt("index.en.md"),
+      player = pageAt("player/index.en.md", "title: Player\ndescription: A."),
+      debug = pageAt("player/debugger/index.en.md", "title: Debugger\ndescription: B."),
+      crtc = pageAt("player/debugger/crtc.en.md", "title: CRTC\ndescription: C."),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [crtc, home, debug, player]),
+      titles = site.trailTo(crtc).map(page => page.title)
+
+    expect(titles).toEqual(["Player", "Debugger", "CRTC"])
+  })
+
+  it("gives no trail to a page with nothing above it but the root", function () {
+    const home = pageAt("index.en.md"),
+      vision = pageAt("vision/index.en.md"),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [home, vision])
+
+    expect(site.trailTo(vision)).toEqual([])
+  })
+
+  it("does not climb out of a page's own language", function () {
+    const english = pageAt("player/index.en.md", "title: Player\ndescription: A."),
+      spanish = new Page(
+        "player/debugger/index.es.md",
+        "---\ntitle: Depurador\ndescription: B.\n---\nProsa.\n",
+        "en"
+      ),
+      config = configFor("https://colophon-project.com/"),
+      site = new Site(config, [english, spanish])
+
+    expect(site.trailTo(spanish)).toEqual([])
+  })
+
   it("resolves a link relative to the page that carries it", function () {
     const source =
         "---\ntitle: A page\ndescription: A description.\n---\nSee [the machine](../machine/).\n",

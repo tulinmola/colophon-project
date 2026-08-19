@@ -25,10 +25,34 @@ function siteOf(pages) {
 }
 
 describe("structuredData", function () {
+  it("numbers a breadcrumb from one, in the order it is read", function () {
+    const player = pageAt("player/index.en.md", "title: Player\ndescription: A."),
+      crtc = pageAt("player/debugger/crtc.en.md", "title: CRTC\ndescription: B."),
+      site = siteOf([player, crtc]),
+      record = structuredData(crtc, site, [player, crtc]),
+      records = JSON.parse(record.toString()),
+      breadcrumb = records.find(entry => entry["@type"] == "BreadcrumbList"),
+      steps = breadcrumb.itemListElement.map(item => [item.position, item.name])
+
+    expect(steps).toEqual([
+      [1, "Player"],
+      [2, "CRTC"]
+    ])
+  })
+
+  it("writes no breadcrumb for a page with nothing above it", function () {
+    const page = pageAt("vision/index.en.md"),
+      site = siteOf([page]),
+      record = structuredData(page, site, []),
+      records = JSON.parse(record.toString())
+
+    expect(records).toHaveLength(1)
+  })
+
   it("writes every angle bracket as an escape, so no title can close the script", function () {
     const page = pageAt("vision/index.en.md", "title: A </script> title\ndescription: A."),
       site = siteOf([page]),
-      record = structuredData(page, site),
+      record = structuredData(page, site, []),
       json = record.toString()
 
     expect(json).not.toContain("</script>")

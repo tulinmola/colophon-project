@@ -79,6 +79,28 @@ export class Site {
     )
   }
 
+  #ancestorsOf(page) {
+    const ancestors = this.#pages.filter(
+      other =>
+        other.language == page.language &&
+        other.segments.length > 0 &&
+        other.segments.length < page.segments.length &&
+        page.isWithin(other)
+    )
+
+    return ancestors.sort((first, second) => first.segments.length - second.segments.length)
+  }
+
+  trailTo(page) {
+    const ancestors = this.#ancestorsOf(page)
+
+    if (ancestors.length == 0) {
+      return []
+    }
+
+    return [...ancestors, page]
+  }
+
   pageAt(relativePath) {
     return this.#pages.find(page => page.relativePath == relativePath)
   }

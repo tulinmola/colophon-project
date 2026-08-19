@@ -102,6 +102,34 @@ main {
   grid-area: main;
 }
 
+main nav {
+  font-size: 0.875rem;
+  margin-block-end: 1.75rem;
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
+
+  li + li::before {
+    color: var(--rule);
+    content: "/";
+    margin-inline: 0.5rem;
+  }
+
+  a {
+    color: var(--ink-quiet);
+    text-decoration: none;
+
+    &:hover,
+    &[aria-current] {
+      color: var(--ink);
+    }
+  }
+}
+
 body > footer {
   border-block-start: 1px solid var(--rule);
   color: var(--ink-quiet);
