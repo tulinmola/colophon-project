@@ -7,6 +7,13 @@
   --rule: light-dark(#e0d9c8, #2c2924);
   --accent: light-dark(#8a3324, #d3866a);
 
+  --code-comment: light-dark(#736a59, #8a8172);
+  --code-string: light-dark(#2f7d2f, #86d07f);
+  --code-keyword: light-dark(#a32b16, #f09070);
+  --code-number: light-dark(#9a5b00, #f0b055);
+  --code-name: light-dark(#00697f, #55c8e0);
+  --code-attribute: light-dark(#8035b0, #d0a0f0);
+
   --serif: ui-serif, Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 

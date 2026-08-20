@@ -22,6 +22,8 @@ Every word the layout says of its own accord lives in `src/strings.yml`, keyed b
 
 A page says at its foot which repository keeps it, because most of them are not kept here. This repository is a source like the others — it is the one `content/` is read from — so every page has one, and `build.json` records the commit of all three. A page marked `generated` in its front matter was written by the build and has no file to point at.
 
+Code is set at build time, in the three languages the documentation is written in and no others: a block in a language nothing here uses is left as it was written rather than guessed at. The colours are the site's own tokens, not a theme brought from elsewhere, and each of them must clear 4.5:1 against both grounds. A fence may name the file its code was taken from, which becomes the caption of a figure.
+
 The site is readable with no JavaScript at all. Script is spent on what cannot be done without it — search, and the machine a colophon runs — never on delivering prose.
 
 ## Voice

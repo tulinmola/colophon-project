@@ -1,16 +1,53 @@
 import MarkdownIt from "markdown-it"
 import { TrustedHtml } from "./trusted_html.js"
 import anchor from "markdown-it-anchor"
+import bash from "highlight.js/lib/languages/bash"
+import c from "highlight.js/lib/languages/c"
+import hljs from "highlight.js/lib/core"
+import xml from "highlight.js/lib/languages/xml"
 
 const HREF = /^(?<path>[^?#]*)(?<suffix>[?#].*)?$/u,
   SCHEME = /^[a-z][a-z0-9+.-]*:/iu
 
+hljs.registerLanguage("bash", bash)
+hljs.registerLanguage("c", c)
+hljs.registerLanguage("xml", xml)
+
+// An empty string is what markdown-it takes for "escape it yourself", which is
+// what a language nothing here is written in gets.
+function highlight(code, language) {
+  if (!hljs.getLanguage(language)) {
+    return ""
+  }
+
+  const highlighted = hljs.highlight(code, { language })
+
+  return highlighted.value
+}
+
 // Raw HTML passes through, which is what lets a page carry a custom element.
 // It also means markdown is trusted input: the day pages arrive by pull
 // request from strangers, this is the line that has to move.
-const markdownIt = new MarkdownIt({ html: true, typographer: true }).use(anchor, {
+const markdownIt = new MarkdownIt({ highlight, html: true, typographer: true }).use(anchor, {
   permalink: anchor.permalink.headerLink({ class: null })
 })
+
+const defaultFence = markdownIt.renderer.rules.fence
+
+markdownIt.renderer.rules.fence = function (tokens, index, options, env, renderer) {
+  const token = tokens[index],
+    words = token.info.trim().split(/\s+/u),
+    name = words.slice(1).join(" "),
+    block = defaultFence(tokens, index, options, env, renderer)
+
+  if (!name) {
+    return block
+  }
+
+  const caption = markdownIt.utils.escapeHtml(name)
+
+  return `<figure>\n<figcaption>${caption}</figcaption>\n${block}</figure>\n`
+}
 
 // A link to a markdown file resolves where the file sits, not where the page
 // it becomes is addressed: a page written flat is a sibling of its neighbours

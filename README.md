@@ -28,6 +28,8 @@ A link names the markdown file it points at, which is what makes it work in an e
 
 Adding a page is adding that file. Nothing else knows the site's shape.
 
+A fenced block may name the file its code came from — ` ```c src/z80.c ` — and the name is set above it.
+
 The few words the layout says for itself — the skip link, the labels a screen reader reads, the line at the foot — are in `src/strings.yml`, each with a line per language.
 
 ## The parts

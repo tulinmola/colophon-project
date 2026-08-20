@@ -196,6 +196,47 @@ pre code {
   font-size: 0.8125rem;
 }
 
+figure pre {
+  margin: 0;
+}
+
+figcaption {
+  color: var(--ink-quiet);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  margin-block-end: 0.4rem;
+  padding-inline-start: calc(1rem + 2px);
+}
+
+.hljs-comment {
+  color: var(--code-comment);
+}
+
+.hljs-string {
+  color: var(--code-string);
+}
+
+.hljs-keyword,
+.hljs-type,
+.hljs-built_in,
+.hljs-meta {
+  color: var(--code-keyword);
+}
+
+.hljs-number,
+.hljs-literal {
+  color: var(--code-number);
+}
+
+.hljs-tag,
+.hljs-name {
+  color: var(--code-name);
+}
+
+.hljs-attr {
+  color: var(--code-attribute);
+}
+
 table {
   border-collapse: collapse;
   font-size: 0.9375rem;
