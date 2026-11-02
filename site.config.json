@@ -27,6 +27,14 @@
       "ref": "main",
       "path": "docs",
       "development": "../colophon-player/docs"
+    },
+    {
+      "slug": "mcp",
+      "order": 4,
+      "repository": "tulinmola/colophon-mcp",
+      "ref": "main",
+      "path": "docs",
+      "development": "../colophon-mcp/docs"
     }
   ]
 }

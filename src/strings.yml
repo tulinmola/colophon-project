@@ -30,7 +30,7 @@ imprintDescription:
   en: The repositories this site is made from, and the commit each of them stood at when it was last built.
 
 imprintIntro:
-  en: A manuscript says at its end who copied it and from what. This site is copied from three repositories, and this is the account of them as they stood when these pages were last written.
+  en: A manuscript says at its end who copied it and from what. This site is copied from several repositories, and this is the account of them as they stood when these pages were last written.
 
 imprintRepository:
   en: Repository

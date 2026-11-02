@@ -4,7 +4,7 @@
 
 A manuscript was copied in one place and read in another. The scriptorium bound it; somewhere else a room was kept warm and lit for the people who came to read what had been written.
 
-This is that room. The [emulator](https://github.com/tulinmola/colophon-emulator) opens the boxes of the 8-bit era and the [player](https://github.com/tulinmola/colophon-player) carries the machine into a page; here is where the account of them is read, in whatever language the reader has, by people and by machines alike.
+This is that room. The [emulator](https://github.com/tulinmola/colophon-emulator) opens the boxes of the 8-bit era, the [player](https://github.com/tulinmola/colophon-player) carries the machine into a page, and the [MCP server](https://github.com/tulinmola/colophon-mcp) hands it to an agent; here is where the account of them is read, in whatever language the reader has, by people and by machines alike.
 
 ## Building
 
@@ -34,7 +34,7 @@ The few words the layout says for itself — the skip link, the labels a screen 
 
 ## The parts
 
-The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them — the [emulator](https://github.com/tulinmola/colophon-emulator) and the [player](https://github.com/tulinmola/colophon-player) — and says where each of them sits in the navigation, because two repositories that know nothing of each other cannot agree on that.
+The documentation of each project belongs to the repository that writes it, and is gathered here when the site is built. `sources` in `site.config.json` names them — the [emulator](https://github.com/tulinmola/colophon-emulator), the [player](https://github.com/tulinmola/colophon-player) and the [MCP server](https://github.com/tulinmola/colophon-mcp) — and says where each of them sits in the navigation, because repositories that know nothing of each other cannot agree on that.
 
 A source is read where it stands. When the sibling repository is checked out beside this one it is read from there, so a page can be written and looked at before it is committed; `npm run gather` clones what is missing into `.cache/` for a machine with no siblings beside it. Nothing is copied into this repository, and every build says which of the two it read.
 
@@ -48,7 +48,7 @@ Beside them the site writes `sitemap.xml`, `robots.txt`, [`llms.txt`](https://ll
 
 Every page says at its foot which repository it is written in, and links to the file. Most of them are not written here.
 
-`The imprint` gathers that in one place: the three repositories and the commit each stood at when the site was last built. It is written by the build, not by hand, and `build.json` says the same thing to a machine.
+`The imprint` gathers that in one place: the repositories and the commit each stood at when the site was last built. It is written by the build, not by hand, and `build.json` says the same thing to a machine.
 
 ## Publishing
 

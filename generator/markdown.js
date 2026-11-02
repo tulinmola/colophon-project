@@ -1,16 +1,20 @@
 import MarkdownIt from "markdown-it"
+import { SCHEME } from "./scheme.js"
 import { TrustedHtml } from "./trusted_html.js"
 import anchor from "markdown-it-anchor"
 import bash from "highlight.js/lib/languages/bash"
 import c from "highlight.js/lib/languages/c"
 import hljs from "highlight.js/lib/core"
+import json from "highlight.js/lib/languages/json"
+import powershell from "highlight.js/lib/languages/powershell"
 import xml from "highlight.js/lib/languages/xml"
 
-const HREF = /^(?<path>[^?#]*)(?<suffix>[?#].*)?$/u,
-  SCHEME = /^[a-z][a-z0-9+.-]*:/iu
+const HREF = /^(?<path>[^?#]*)(?<suffix>[?#].*)?$/u
 
 hljs.registerLanguage("bash", bash)
 hljs.registerLanguage("c", c)
+hljs.registerLanguage("json", json)
+hljs.registerLanguage("powershell", powershell)
 hljs.registerLanguage("xml", xml)
 
 // An empty string is what markdown-it takes for "escape it yourself", which is

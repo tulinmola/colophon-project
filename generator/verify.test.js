@@ -104,6 +104,14 @@ describe("verify", function () {
     expect(problems).toEqual(["/: links to nowhere.en.md, which is no page"])
   })
 
+  it("leaves a link out of the site alone, though it names a markdown file", function () {
+    const page = pageAt("index.en.md", COMPLETE, "See [it](https://example.com/notes.en.md).\n"),
+      site = siteOf([page]),
+      problems = verify(site)
+
+    expect(problems).toEqual([])
+  })
+
   it("reports a string that says nothing in a language the site is written in", function () {
     const strings = { sections: { en: "Sections" } },
       languages = {

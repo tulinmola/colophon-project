@@ -17,6 +17,8 @@ The [emulator](https://github.com/tulinmola/colophon-emulator) is the instrument
 
 The [player](https://github.com/tulinmola/colophon-player) carries that machine into a page, so a reader can run it beside the account of it and hold the two against each other. It began as a way to check the emulator and turned into the workbench.
 
+The [MCP server](https://github.com/tulinmola/colophon-mcp) hands the same machine to an agent, which asks it for everything over the Model Context Protocol. Its answers name the build that gave them and the copy the machine was read from, so that whoever comes next can ask again.
+
 The archive is where the colophons will be kept, each one an argument with its evidence attached. There is nothing in it yet.
 
 What a colophon has to prove before it is published is set out in [the vision](/en/vision/).

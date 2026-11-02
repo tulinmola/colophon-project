@@ -1,3 +1,4 @@
+import { SCHEME } from "./scheme.js"
 import { readSite } from "./read_site.js"
 import { recordsOf } from "./records.js"
 
@@ -118,7 +119,7 @@ export function verify(site) {
 
     for (const href of hrefsIn(markup)) {
       const address = href.replace(/[?#].*$/u, ""),
-        inside = address.startsWith("/") || address.endsWith(".md")
+        inside = !SCHEME.test(address) && (address.startsWith("/") || address.endsWith(".md"))
 
       if (inside && !addresses.has(address)) {
         problems.push(`${page.path}: links to ${href}, which is no page`)
